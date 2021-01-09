@@ -2,8 +2,11 @@
 const sentence = document.getElementById("sentence");
 const sentenceInArray = sentence.innerText.split("");
 const numOfLetter = sentenceInArray.length;
-const sentenceHidden = [];
+let sentenceHidden = [];
 let sentenceVisible = [];
+
+//* VARIABLES FOR LOCKER
+const locker = document.getElementById("locker");
 
 //* VARIABLES FOR THE SECTION CONTAINS SENTENCE, OFFSET & HEIGHT
 const section2 = document.getElementById("section-2");
@@ -47,10 +50,10 @@ window.onscroll = () => {
        *which is the start of animation then show the first letter
        */
       if (newScrollPos >= 0) {
+        locker.style.transform = "translate(10px, 0px) rotateY(180deg)";
         sentenceHidden[0] = sentenceVisible[0];
         sentence.innerText = sentenceHidden.join("");
       }
-
       /*
        *If newScrollPos = 0
        *which is the start of animation then show the first letter
@@ -62,16 +65,12 @@ window.onscroll = () => {
         sentenceHidden[positionLetter] = sentenceVisible[positionLetter];
         sentence.innerText = sentenceHidden.join("");
       }
-      /*
-       *If scrollPos >= the top of the section contains the text
-       *which is the end of animation then show the last letter
-       */
-    } else if (scrollPos >= section2offsetTop) {
-      sentenceHidden[numOfLetter - 1] = sentenceVisible[numOfLetter - 1];
-      sentence.innerText = sentenceHidden.join("");
     }
     //* When user scroll up
   } else if (scrollPos <= section2offsetTop) {
+    if (newScrollPos <= 0) {
+      locker.style.transform = "translate(0) rotateY(0deg)";
+    }
     sentenceHidden[numOfLetter - 1] = ".";
     sentence.innerText = sentenceHidden.join("");
     if (newScrollPos <= howManyPixelPerLetter) {
